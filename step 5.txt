@@ -1,0 +1,53 @@
+You are an expert Game Feel and Audio-Visual Polish Engineer specializing in Web Audio API, Canvas particles, and CSS micro-animations.
+
+We have the complete game architecture: Arena layout (Step 1), Enemy loop (Step 2), Typing combat (Step 3), and Tower/Tactical upgrades (Step 4). Now, implement Step 5: The "Game Juice", Audio Synthesis, and Particle System to make every keystroke feel punchy, impactful, and satisfying.
+
+### Objectives:
+1. Build a pure zero-dependency Web Audio API synthesizer (`SoundEngine.ts`) for mechanical typing clicks, laser blasts, explosions, error buzzes, and tactical spells.
+2. Build a high-performance 2D Particle System for enemy death explosions, projectile impacts, and coin popups.
+3. Add tactile screen rumble (Screen Shake) and damage vignetting when the base takes hits.
+4. Implement a Polished Game Over / Wave Victory summary modal with WPM, Accuracy, and Gold earned statistics.
+
+---
+
+### Detailed Specifications:
+
+1. **Procedural Web Audio Engine (`src/utils/SoundEngine.ts`):**
+   Use standard browser `AudioContext` (no external mp3/wav files required) to synthesize sounds on the fly:
+   - **`playKeyClick()`:** A sharp, tactile mechanical switch click (short sine/triangle blip with slight pitch variation: ~800Hz-1200Hz, duration: 0.03s).
+   - **`playLaserShot()`:** Quick frequency sweep downwards (1500Hz down to 300Hz, sawtooth wave, duration: 0.08s).
+   - **`playExplosion()`:** Filtered white noise burst with low-pass roll-off to simulate an explosive blast (duration: 0.3s).
+   - **`playTypoError()`:** Low discordant sawtooth buzz (150Hz, duration: 0.1s).
+   - **`playNukeAlarm()`:** Descending alarm tone with heavy sub-bass boom.
+   - **`playFreezeSound()`:** High-frequency crystalline shimmer (sine wave modulated with noise).
+   - *Audio unlock:* Initialize AudioContext gracefully on the user's first click or keystroke.
+
+2. **Canvas / SVG Particle Emitter (`ParticleOverlay.tsx`):**
+   - Render a lightweight overlay canvas on top of `DefenseArena`:
+     - **On Correct Letter Typed:** Emit 3-5 tiny sparks flying back from the hit point.
+     - **On Enemy Defeat:** Explode 25-40 neon debris particles radiating outward with random velocities, gravity decay, and fading opacity.
+     - **On Gold Earned:** Floating bounce text `+25G` floating upward and fading out.
+     - **On Freeze Cast:** Shimmering frost particles drifting slowly across the entire screen.
+
+3. **Screen Shake & Dynamic Post-Processing:**
+   - Create a camera controller utility or CSS wrapper class:
+     - **Light Trauma (Typo / Laser hit):** 2px shake for 100ms.
+     - **Heavy Trauma (Enemy breaches base):** 8-12px violent shake for 400ms accompanied by a pulsing red vignette border on the viewport.
+     - **Nuke Impact:** Full screen white-out flash fading out over 0.5s with a rolling rumble.
+
+4. **Game Over & Wave Victory Modals:**
+   - **Wave Cleared Screen:**
+     - Displays: Wave Completed, Total Enemies Defeated, Average WPM, Overall Accuracy %, Bonus Gold Awarded.
+     - Action: `[NEXT WAVE - PRESS ENTER]` button.
+   - **Fortress Destroyed (Game Over) Screen:**
+     - Dark red terminal glitch aesthetic.
+     - Summary of performance, final score, and waves survived.
+     - Action: `[REBOOT SYSTEM / PLAY AGAIN]`.
+
+---
+
+### Deliverables:
+1. `src/utils/SoundEngine.ts` (Robust, lightweight Web Audio generator).
+2. `src/components/ParticleOverlay.tsx` (Fluid 60 FPS particle rendering).
+3. Integration of audio triggers and screen shake states into `useTypingCombat` and main arena container.
+4. `VictoryModal.tsx` and `GameOverModal.tsx` components.

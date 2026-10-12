@@ -1,0 +1,49 @@
+You are an expert Game Economy and Combat Systems Engineer specializing in React, TypeScript, and state management.
+
+We already have the lane defense arena (Step 1), enemy waves (Step 2), and real-time target locking & typing combat (Step 3). Now, implement Step 4: The Strategic Economy & Tactical Defense Upgrades to transform the typing mechanics into a full Tower Defense experience.
+
+### Objectives:
+1. Implement an in-game Economy & Shop system utilizing earned Gold.
+2. Build Lane-Specific Support Turrets (Cryo Slow Turret, Tesla Chain Turret, Auto-Barrage Turret) purchasable per lane.
+3. Implement "Tactical Panic Commands" (special global emergency words like "NUKE", "FREEZE", "REPAIR" that can be typed at any time to clear screens or recover HP).
+4. Integrate upgrade menus and spell hotkey HUD into `CommandDeck.tsx` and `DefenseArena.tsx`.
+
+---
+
+### Detailed Mechanics & Specifications:
+
+1. **Lane-Specific Support Turrets:**
+   Allow the player to place or upgrade 1 support module per lane on the Fortress side (costing Gold):
+   - **Cryo Pylon (Cost: 150g):** Emits a permanent slow aura in that lane, reducing all enemy movement speeds by 35%.
+   - **Tesla Coil (Cost: 250g):** Whenever a word is completed in this lane, electric arcs bounce to 2 adjacent lane enemies, dealing partial damage (instantly typing out their first 2 letters).
+   - **Kinetic Overclock (Cost: 200g):** Grants +50% Gold bonus and increases Fortress shield threshold in this lane.
+
+2. **Tactical Panic Words (Emergency Commands):**
+   Players can activate emergency interventions by typing uppercase reserved trigger words when not locked onto a target, or via an emergency prefix (e.g., typing `!` or pressing `Space` to enter Command Mode):
+   - **`NUKE` (Cost: 300g or 100 Energy):**
+     - Instantly obliterates all enemies currently on screen.
+     - Spawns a full-screen white/amber flash and screen shake.
+   - **`FREEZE` (Cost: 150g or 50 Energy):**
+     - Completely halts all enemy movement across all lanes for 5.0 seconds.
+     - Adds a frosted ice visual overlay across the arena.
+   - **`REPAIR` (Cost: 100g):**
+     - Instantly restores +25 HP to the Fortress Core (capped at max HP).
+
+3. **Input Priority Integration (`useTypingCombat.ts`):**
+   - Ensure the typing engine cleanly differentiates between:
+     1. An active locked enemy word.
+     2. A tactical emergency command (e.g., if player types `N-U-K-E` while having sufficient gold/energy, prioritize firing the tactical skill).
+     3. Alternatively, display emergency commands as pinned action cards with designated hotkeys (e.g., Press `Space` + Type `NUKE`).
+
+4. **UI Integration (`DefenseArena.tsx` & `CommandDeck.tsx`):**
+   - **Lane Turret Sockets:** Render visible turret mounts at the left edge of each lane with upgrade buttons or status badges showing current installed module (`NONE`, `CRYO`, `TESLA`).
+   - **Tactical Spells Tray:** Display active cooldowns and Gold/Energy requirements for `NUKE`, `FREEZE`, and `REPAIR`. Show whether the player currently has enough resources to cast them.
+   - **Float Text & Rewards:** Display floating `+25g` and `+100 PTS` text animations floating up from destroyed enemies.
+
+---
+
+### Deliverables:
+1. `src/types/tactics.ts` (Data structures for Turret upgrades and Tactical abilities).
+2. `src/hooks/useTacticalAbilities.ts` (State manager for abilities, cooldowns, and lane turret effects).
+3. Updated `useTypingCombat.ts` integrating emergency command input handling.
+4. Visual upgrade components in `DefenseArena.tsx` and interactive tactical tray in `CommandDeck.tsx`.

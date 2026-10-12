@@ -1,0 +1,42 @@
+You are an expert Game Developer and Frontend Engineer specializing in React, TypeScript, and HTML5 Canvas/Web Game architecture.
+
+I want to build a "Typing Tower Defense" game where enemies march down lanes holding words, and the player must type words to fire turrets and defend their fortress.
+
+In this first step, please scaffold the core application and build the Game Arena and Base Defense UI layout.
+
+### Tech Stack:
+- Framework: React + TypeScript (Vite setup)
+- Styling: Tailwind CSS
+- Icons: lucide-react (for UI indicators)
+- Font: Monospace / Tech / Retro Gaming font
+
+### Game Concept & Layout Architecture:
+1. **Screen Layout (Full Viewport, 16:9 responsive arena):**
+   - **Top Status HUD:**
+     - Fortress Core Health Bar (e.g., 100/100 HP with color transitions).
+     - Gold / Energy counter.
+     - Current Wave / Score / High Score.
+     - Active Multiplier / Streak indicator.
+   - **Central Defense Arena (3-4 Horizontal Defense Lanes):**
+     - Left side: The Fortress / Command Hub (showing active turrets pointing down each lane).
+     - Middle/Lanes: Clearly marked lanes (Grid or Canvas) where enemies will spawn from the right and march left toward the base.
+     - Lane Markers / Danger threshold lines (highlighting the zone where enemies are dangerously close).
+   - **Bottom Command Deck:**
+     - Active Locked Target display (shows the current enemy being targeted and its highlighted word).
+     - Global Spell / Panic Buttons placeholder (e.g., "[NUKE] - 100g", "[FREEZE] - 50g").
+     - Keyboard HUD (minimalist visual representation of active typing feedback).
+
+2. **State & Structure Design:**
+   - Define clean TypeScript interfaces in `src/types/game.ts`:
+     - `Lane`: id, index, y-position.
+     - `BaseStats`: maxHp, currentHp, gold, wave, score.
+     - `GameState`: 'IDLE' | 'PLAYING' | 'WAVE_CLEARED' | 'GAME_OVER'.
+   - Scaffold components:
+     - `GameHUD.tsx`
+     - `DefenseArena.tsx`
+     - `CommandDeck.tsx`
+
+### Deliverables:
+1. Complete Tailwind styling and theme configuration (Sci-fi / Cyber-defense aesthetic with neon accents: cyan, amber, crimson).
+2. Clean modular components rendering the arena with 3 to 4 distinct lanes and the fortress hub.
+3. Interactive state placeholders (e.g., buttons to simulate taking damage or gaining gold) to verify UI responsiveness before implementing the movement engine.

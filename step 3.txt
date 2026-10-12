@@ -1,0 +1,59 @@
+You are an expert Game Mechanics and Input System Engineer specializing in React, TypeScript, and real-time state management.
+
+We have the arena layout (Step 1) and moving enemies traversing lanes (Step 2). Now, implement Step 3: The Target-Locking & Typing-to-Fire Engine, the core interactive mechanic of the game.
+
+### Objectives:
+1. Implement a smart "First-Letter Target Locking" algorithm that selects the most threatening enemy when the player types a letter.
+2. Maintain input focus globally across window keydown events.
+3. Validate letter-by-letter typing progress on the locked target with dynamic visual feedback.
+4. Trigger destruction of the target upon word completion, grant Gold/Score rewards, and fire visual projectile beams from the fortress turret.
+
+---
+
+### Detailed Mechanics & Specifications:
+
+1. **Target Selection Algorithm (Target Locking):**
+   - **When NO target is currently locked:**
+     - Listen for a valid letter keypress (`a-z`).
+     - Search all active enemies whose words **begin with that pressed letter**.
+     - **Tie-breaker / Threat Priority:** If multiple enemies start with the same letter, lock onto the one with the smallest `x` coordinate (i.e. closest to the fortress/most dangerous).
+     - Once locked:
+       - Set `lockedTargetId = enemy.id`.
+       - Mark character index 0 as completed (`typedCount = 1`).
+       - Play a quick target lock sound/indicator.
+   - **When a target IS currently locked:**
+     - Ignore other enemies; the player is committed to typing the remaining letters of the locked enemy's word.
+     - Check if the next incoming keypress matches `enemy.word[enemy.typedLetters]`:
+       - **Match:** Increment `enemy.typedLetters`. Trigger a mini hit-spark / laser shot from the corresponding turret lane toward the enemy.
+       - **Mismatch (Typo):** Play an error buzzer sound, trigger a brief recoil/shake on the target card, and reset current typing streak (do NOT unlock the target).
+     - **Enemy Defeated (`typedLetters === word.length`):**
+       - Award gold (`enemy.goldReward`) and score to the player.
+       - Trigger an explosion / particle death effect at the enemy's `(x, y)` location.
+       - Remove the enemy from the active state.
+       - Release the lock (`lockedTargetId = null`).
+     - **Target Breached Before Finished:**
+       - If the locked enemy reaches `x <= 0` and hits the base, release the lock (`lockedTargetId = null`) and penalize the fortress HP.
+
+2. **Visual Feedback on Enemy Word Tags (`EnemyUnit.tsx`):**
+   Render the floating word above each enemy with 3 distinct character states:
+   - **Typed Letters:** Highlighted in glowing bright cyan or electric green (`text-cyan-400 font-bold underline`).
+   - **Next Letter:** Highlighted with a blinking cursor indicator (`bg-white/30 text-white rounded px-0.5`).
+   - **Remaining Letters:** Semi-transparent/dim white (`text-zinc-400`).
+   - **Target Lock Ring:** If `enemy.id === lockedTargetId`, draw a high-contrast targeting crosshair or pulsating neon reticle around the enemy unit.
+
+3. **Command Deck & Turret Firing Integration:**
+   - In `CommandDeck.tsx`: Display the currently locked target's portrait, remaining word string, and progress bar prominently in the center.
+   - In `DefenseArena.tsx`: Draw a momentary beam / laser line (using SVG overlay or Canvas) connecting the fortress lane turret to the locked enemy each time a correct letter is typed.
+
+4. **Input Handler Hook (`useTypingCombat.ts`):**
+   - Intercept global `keydown` events.
+   - Filter out modifier keys (`Shift`, `Control`, `Alt`, `Meta`, `Tab`, `ArrowKeys`).
+   - Support `Escape` key: Optional manual target cancel/unlock (costing a small penalty or resetting combo).
+
+---
+
+### Deliverables:
+1. `src/hooks/useTypingCombat.ts` (Clean custom hook handling keyboard events and target-lock state).
+2. Updated `EnemyUnit.tsx` with dynamic letter highlighting and targeting reticle.
+3. Updated `DefenseArena.tsx` rendering laser shots / attack animations toward locked enemies.
+4. Updated `CommandDeck.tsx` showing the active lock-on target status.

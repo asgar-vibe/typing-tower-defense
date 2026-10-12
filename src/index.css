@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #060913;
+  color: #e2e8f0;
+  font-family: 'JetBrains Mono', monospace;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Custom Grid Background */
+.cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+}
+
+.lane-grid {
+  background-size: 60px 100%;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Screen Shake Animations */
+@keyframes shake-light {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, -1px); }
+}
+
+@keyframes shake-heavy {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-8px, 6px); }
+  40% { transform: translate(8px, -6px); }
+  60% { transform: translate(-6px, -4px); }
+  80% { transform: translate(6px, 4px); }
+}
+
+.screen-shake-light {
+  animation: shake-light 0.12s ease-in-out;
+}
+
+.screen-shake-heavy {
+  animation: shake-heavy 0.35s ease-in-out;
+}
+
+/* Damage Vignette Pulse */
+@keyframes vignette-pulse {
+  0% { box-shadow: inset 0 0 0 0 rgba(255, 42, 85, 0); }
+  50% { box-shadow: inset 0 0 100px 30px rgba(255, 42, 85, 0.6); }
+  100% { box-shadow: inset 0 0 0 0 rgba(255, 42, 85, 0); }
+}
+
+.damage-vignette {
+  animation: vignette-pulse 0.4s ease-out;
+}
+
+/* Nuke Flash */
+@keyframes nuke-flash {
+  0% { opacity: 0.95; }
+  100% { opacity: 0; }
+}
+
+.nuke-overlay {
+  animation: nuke-flash 0.6s ease-out forwards;
+}
+
+/* Glassmorphism Cyber Card */
+.cyber-card {
+  background: rgba(13, 20, 36, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.cyber-card-active {
+  background: rgba(16, 28, 52, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 240, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+/* Neon Glow text */
+.text-neon-cyan {
+  color: #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.text-neon-amber {
+  color: #ffaa00;
+  text-shadow: 0 0 10px rgba(255, 170, 0, 0.7), 0 0 20px rgba(255, 170, 0, 0.3);
+}
+
+.text-neon-crimson {
+  color: #ff2a55;
+  text-shadow: 0 0 10px rgba(255, 42, 85, 0.7), 0 0 20px rgba(255, 42, 85, 0.3);
+}
+
+.text-neon-green {
+  color: #00ff66;
+  text-shadow: 0 0 10px rgba(0, 255, 102, 0.7), 0 0 20px rgba(0, 255, 102, 0.3);
+}
+
+/* Scanline CRT overlay */
+.scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}

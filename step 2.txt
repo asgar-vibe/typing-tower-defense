@@ -1,0 +1,34 @@
+You are an expert Game Mechanics Engineer specializing in React, TypeScript, and 2D Game Loop architecture.
+
+We have already scaffolded the arena layout and multi-lane HUD (Step 1). Now, implement Step 2: The Enemy Spawning System and Real-time Movement Loop (`requestAnimationFrame` with delta-time).
+
+### Objectives:
+1. Implement a 60 FPS delta-time driven Game Loop to manage real-time updates independently of React render cycles.
+2. Build an Enemy Spawning & Wave Director that spawns diverse enemy types across lanes.
+3. Handle continuous movement from right to left, lane positioning, and base-collision detection (deducting Fortress HP when enemies breach).
+4. Render animated enemies with their designated target words floating clearly above them.
+
+---
+
+### Detailed Specifications:
+
+1. **Enemy Types & Data Model (`src/types/enemy.ts`):**
+   Define distinct enemy archetypes:
+   - **Scout / Drone:** Very fast movement (`speed: 120px/s`), short words (3-4 characters), low reward.
+   - **Assault Bot / Mech:** Normal movement (`speed: 65px/s`), medium words (5-7 characters), standard reward.
+   - **Siege Tank / Juggernaut:** Very slow movement (`speed: 30px/s`), long complex words or compound words (8-12 characters), high damage on breach, large reward.
+
+   Enemy Entity schema:
+   ```typescript
+   export interface Enemy {
+     id: string;
+     laneIndex: number; // 0, 1, 2, or 3
+     type: 'SCOUT' | 'ASSAULT' | 'TANK';
+     word: string; // The full assigned word to be typed
+     typedLetters: number; // Progress tracked for later steps (starts at 0)
+     x: number; // Position in percentage (100 = right spawn, 0 = base reached)
+     speed: number; // Percentage decremented per second
+     damageToBase: number;
+     goldReward: number;
+     isBreached: boolean;
+   }
