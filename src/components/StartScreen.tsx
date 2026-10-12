@@ -37,15 +37,15 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart, highScore }) 
         {/* Top Protocol Tag */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/40 text-cyan-400 text-xs font-tech font-bold uppercase mb-4 shadow-cyan-glow">
           <Terminal className="w-3.5 h-3.5" />
-          Terminal Defense OS v2.0
+          AKIRA WAEWBANDHIT
         </div>
 
         {/* Game Title */}
         <h1 className="text-4xl sm:text-5xl font-black font-display tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-200 to-amber-400 mb-2 drop-shadow-md">
-          TYPING DEFENSE
+          TYPING TOWER DEFENSE
         </h1>
         <p className="text-xs sm:text-sm font-mono text-cyan-300/80 uppercase tracking-widest mb-6">
-          // CYBER FORTRESS PROTOCOL
+          CYBER FORTRESS PROTOCOL
         </p>
 
         {/* High Score Badge */}
