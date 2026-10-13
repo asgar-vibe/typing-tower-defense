@@ -114,11 +114,11 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart, highScore }) 
         </button>
 
         {/* Trailer Clip Stream Link Section */}
-        <div className="mt-5 pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-center">
           <button
             type="button"
             onClick={() => setShowTrailer(true)}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-lg bg-cyan-950/40 hover:bg-cyan-900/50 border border-cyan-500/40 hover:border-cyan-300 text-cyan-300 hover:text-cyan-100 transition-all duration-200 group cursor-pointer shadow-sm hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] w-full sm:w-auto justify-center"
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-lg bg-cyan-950/40 hover:bg-cyan-900/50 border border-cyan-500/40 hover:border-cyan-300 text-cyan-300 hover:text-cyan-100 transition-all duration-200 group cursor-pointer shadow-sm hover:shadow-[0_0_15px_rgba(6,182,212,0.3)]"
           >
             <Film className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
             <span className="font-tech font-bold tracking-wider text-xs sm:text-sm">
